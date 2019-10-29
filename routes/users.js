@@ -43,14 +43,17 @@ router.post(
 				password
 			});
 
+			// 使用 bcryptjs hash 加密
 			const salt = await bcrypt.genSalt(10);
 			user.password = await bcrypt.hash(password, salt);
 
 			await user.save();
-
 			res.send("User saved");
 		} catch (error) {
+			// 詳細的 error 資訊只給開發人員知道
 			console.log(error.message);
+
+			// 統一回傳狀態 500，及錯誤訊息
 			res.status(500).send("Server error");
 		}
 	}
