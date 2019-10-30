@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const ContactSchema = mongoose.Schema({
 	user: {
+		// 用來判斷是哪一個 User
 		type: mongoose.Schema.Types.ObjectId,
+		// DB 中的 Collection
 		ref: "users"
 	},
 	nema: {
