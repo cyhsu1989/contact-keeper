@@ -6,7 +6,7 @@ const ContactSchema = mongoose.Schema({
 		// DB 中的 Collection
 		ref: "users"
 	},
-	nema: {
+	name: {
 		type: String,
 		require: true
 	},
