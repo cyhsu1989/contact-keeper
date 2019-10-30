@@ -4,14 +4,22 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
-
+const auth = require("../middleware/auth");
 const User = require("../models/User");
 
 //@route    GET api/auth
 //@desc     Get logged in user
 //@access   Private
-router.get("/", (req, res) => {
-	res.send("Get logged in user");
+router.get("/", auth, async (req, res) => {
+	try {
+		// 拿著透過 middleware 才解析出來的 user id，在 DB 中找到該 user 相關資料，但不要回傳 password
+		const user = await User.findById(req.user.id).select("-password");
+		// 回傳 user 資料
+		res.json(user);
+	} catch (error) {
+		console.error(error.message);
+		res.status(500).send("Server error");
+	}
 });
 
 //@route    POST api/auth
