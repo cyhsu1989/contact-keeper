@@ -43,6 +43,14 @@ const ContactState = props => {
 	const [state, dispatch] = useReducer(contactReducer, initalState);
 
 	// Add Contact
+	const addContact = contact => {
+		// 產生 id，測試用
+		contact.id = uuid.v4();
+		dispatch({
+			type: ADD_CONTACT,
+			payload: contact
+		});
+	};
 
 	// Delete Contact
 
@@ -59,7 +67,8 @@ const ContactState = props => {
 	return (
 		<ContactContext.Provider
 			value={{
-				contacts: state.contacts
+				contacts: state.contacts,
+				addContact
 			}}
 		>
 			{props.children}
