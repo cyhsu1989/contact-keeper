@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import AuthContext from "./authContext";
 import authReducer from "./authReducer";
+import axios from "axios";
 import {
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
@@ -16,7 +17,7 @@ const AuthState = props => {
 	const initalState = {
 		token: localStorage.getItem("token"),
 		isAuthenticated: null,
-		loading: null,
+		loading: true,
 		user: null,
 		error: null
 	};
@@ -26,12 +27,38 @@ const AuthState = props => {
 	// Load User
 
 	// Register User
+	const register = async formData => {
+		const config = {
+			"Content-Type": "application/json"
+		};
+
+		try {
+			// 因為在 package.json 有設定 "proxy": "http://localhost:5000"
+			// 所以這裡只要寫 API 路徑 "/api/users"
+			const res = await axios.post("/api/users", formData, config);
+
+			dispatch({
+				type: REGISTER_SUCCESS,
+				payload: res.data
+			});
+		} catch (error) {
+			dispatch({
+				type: REGISTER_FAIL,
+				payload: error.response.data.msg
+			});
+		}
+	};
 
 	// Login User
 
 	// Logout
 
 	// Clear Errors
+	const clearErrors = () => {
+		dispatch({
+			type: CLEAR_ERRORS
+		});
+	};
 
 	return (
 		<AuthContext.Provider
@@ -40,7 +67,9 @@ const AuthState = props => {
 				isAuthenticated: state.isAuthenticated,
 				loading: state.loading,
 				user: state.user,
-				error: state.error
+				error: state.error,
+				register,
+				clearErrors
 			}}
 		>
 			{props.children}

@@ -1,9 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AlertContext from "../../context/alert/alertContext";
+import AuthContext from "../../context/auth/authContext";
 
 const Register = () => {
 	const alertContext = useContext(AlertContext);
+	const authContext = useContext(AuthContext);
 	const { setAlert } = alertContext;
+	const { register, error, clearErrors } = authContext;
+
+	useEffect(() => {
+		// 當 error 有變化就顯示錯誤訊息
+		// TODO: 應該使用 error code
+		if (error === "User already exists") {
+			setAlert(error, "danger");
+			clearErrors();
+		}
+	}, [error]);
 
 	const [user, setUser] = useState({
 		name: "",
@@ -25,7 +37,11 @@ const Register = () => {
 		} else if (password !== password2) {
 			setAlert("Password do no match", "dnager");
 		} else {
-			console.log("Register Submit");
+			register({
+				name,
+				email,
+				password
+			});
 		}
 	};
 
