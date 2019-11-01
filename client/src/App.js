@@ -6,6 +6,7 @@ import Home from "./component/pages/Home";
 import Register from "./component/auth/Register";
 import Login from "./component/auth/Login";
 import Alerts from "./component/layout/Alerts";
+import PrivateRoute from "./component/routing/PrivateRoute";
 import ContactState from "./context/contact/ContactState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
@@ -27,11 +28,11 @@ function App() {
 							<div className="container">
 								<Alerts></Alerts>
 								<Switch>
-									<Route
+									<PrivateRoute
 										exact
 										path="/"
 										component={Home}
-									></Route>
+									></PrivateRoute>
 									<Route
 										exact
 										path="/about"
