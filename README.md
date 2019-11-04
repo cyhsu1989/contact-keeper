@@ -11,7 +11,7 @@
 -   後端學習 Node.js Express 開發 API，實現 CRUD 的操作，並連接 MongoDB。
 -   前端熟練 React.js，開發使用介面，利用 Hooks 及 Context API 做狀態管理。
 
-提供基本會員功能：註冊會員、登入、登出。
+提供基本會員功能：註冊會員、登入、登出，使用 JSON Web Tokens 做驗證。
 
 會員可記錄聯絡人資訊（姓名、Email、電話）：提供讀取、新增、修改、刪除資料的動作。
 
@@ -23,3 +23,4 @@
 
 -   React.js
 -   Node.js (Express)
+-   JSON Web Tokens
